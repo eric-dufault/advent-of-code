@@ -6,17 +6,9 @@ import java.util.List;
 
 public class Main {
 
-  public static void main(String[] args) {
-    try {
-      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day04\\input04.txt"));
-      partAandB(lines);
-    }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
-  }
+  public static void main(String[] args) throws Exception {
+    List<String> pairs = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day04\\input04.txt"));
 
-  private static void partAandB(List<String> pairs) {
     int containments = 0;
     int overlaps = 0;
     for(String pair : pairs) {
