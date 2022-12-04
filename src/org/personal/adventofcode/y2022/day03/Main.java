@@ -9,7 +9,7 @@ public class Main {
 
   public static void main(String[] args) {
     try {
-      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\AdventOfCode2022\\src\\org\\personal\\adventofcode\\y2022\\day03\\input03.txt"));
+      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day03\\input03.txt"));
 
       partA(lines);
       partB(lines);
@@ -48,7 +48,7 @@ public class Main {
     System.out.println(sum);
   }
 
-  public static int getPriority(char c) {
+  private static int getPriority(char c) {
     int result;
     if (Character.isUpperCase(c))
       result = ((int) c) - 38;

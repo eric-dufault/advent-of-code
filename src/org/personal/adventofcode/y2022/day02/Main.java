@@ -11,7 +11,7 @@ public class Main {
 
   public static void main(String[] args) {
     try {
-      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\AdventOfCode2022\\src\\org\\personal\\adventofcode\\y2022\\day02\\input02.txt"));
+      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day02\\input02.txt"));
       partA(lines);
       partB(lines);
     }

@@ -12,7 +12,7 @@ public class Main {
 
   public static void main(String[] args) {
     try {
-      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\AdventOfCode2022\\src\\org\\personal\\adventofcode\\y2022\\day01\\input01.txt"));
+      List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day01\\input01.txt"));
 
       partAandB(lines);
     } catch (Exception e) {
