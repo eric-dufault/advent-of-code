@@ -14,21 +14,20 @@ public class Move {
     this.destinationStack = destinationStack;
   }
 
-  public void performMove() {
+  public void perform() {
     for (int i = 0; i < moveCrateCount; i++) {
       Character c = sourceStack.pop();
       destinationStack.push(c);
     }
   }
 
-  public void performUnitMove() {
-    char[] temp = new char[moveCrateCount];
+  public void performUnit() {
+    Character[] temp = new Character[moveCrateCount];
     for(int i = 0 ; i < moveCrateCount; i++) {
       Character c = sourceStack.pop();
       temp[i] = c;
     }
-    for(int i = temp.length-1; i >= 0; i--) {
+    for(int i = temp.length-1; i >= 0; i--)
       destinationStack.push(temp[i]);
-    }
   }
 }
