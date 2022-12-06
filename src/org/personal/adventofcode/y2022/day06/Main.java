@@ -23,15 +23,15 @@ public class Main {
   private static Packet getPacket(String datastream, int packetSize) {
     Packet packet = null;
 
-    for (int i = 0; i < datastream.length(); i++) {
+    for(int i = 0; i < datastream.length(); i++) {
       Set<Character> testPacketItems = new HashSet<>();
-      String packetString = "";
-      for (int j = i; j < datastream.length() && j < i + packetSize; j++) {
+      int j = i;
+      while(j < datastream.length() && j < i + packetSize) {
         testPacketItems.add(datastream.charAt(j));
-        packetString += datastream.charAt(j);
+        j++;
       }
       if (testPacketItems.size() == packetSize) {
-        packet = new Packet(i+packetSize, packetString);
+        packet = new Packet(j, datastream.substring(i, j));
         break;
       }
     }
