@@ -52,9 +52,7 @@ public class Main {
   private static void partA(Directory root) {
     BigInteger threshold = BigInteger.valueOf(100000L);
 
-    List<Directory> directories = new ArrayList<>();
-    collect(root, directories);
-
+    List<Directory> directories = collectChildren(root);
     Collections.sort(directories);
 
     BigInteger sum = BigInteger.ZERO;
@@ -77,9 +75,7 @@ public class Main {
     BigInteger availableSpace = totalSpace.subtract(usedSpace);
     BigInteger toFreeSpace = requiredSpace.subtract(availableSpace);
 
-    List<Directory> directories = new ArrayList<>();
-    collect(root, directories);
-
+    List<Directory> directories = collectChildren(root);
     Collections.sort(directories);
 
     int i = 0;
@@ -92,11 +88,17 @@ public class Main {
     System.out.println(directory.getName() + ": " + directory.getTotalSize());
   }
 
-  private static void collect(Directory directory, List<Directory> directories) {
+  private static List<Directory> collectChildren(Directory directory) {
+    List<Directory> directories = new ArrayList<>();
+    collectChildren(directory, directories);
+    return directories;
+  }
+
+  private static void collectChildren(Directory directory, List<Directory> directories) {
     directories.add(directory);
     if (!directory.getSubDirectories().isEmpty()) {
       for (Directory subDirectory : directory.getSubDirectories())
-        collect(subDirectory, directories);
+        collectChildren(subDirectory, directories);
     }
   }
 
