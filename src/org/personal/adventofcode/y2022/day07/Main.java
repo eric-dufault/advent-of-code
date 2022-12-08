@@ -19,6 +19,7 @@ public class Main {
 
     partA(root);
     partB(root);
+    //debug(root, "");
   }
 
   private static Directory getFilesystemRoot(List<String> lines) {
@@ -31,16 +32,15 @@ public class Main {
         if (MOVE_PARENT_DIRECTORY.equals(dirName))
           currentDirectory = currentDirectory.getParent();
         else
-          currentDirectory = currentDirectory.getSubDirectories().stream().filter(d -> dirName.equals(d.getName())).findFirst().get();
+          currentDirectory = currentDirectory.getSubDirectory(dirName);
       }
       else if (line.startsWith(READ_DIRECTORY_COMMAND)) {}
       else {
         String[] parts = line.split(" ");
         if (DIRECTORY_IDENTIFIER.equals(parts[0])) {
           Directory subDirectory = currentDirectory.getSubDirectory(parts[0]);
-          if (subDirectory == null) {
+          if (subDirectory == null)
             currentDirectory.addSubDirectory(new Directory(currentDirectory, parts[1]));
-          }
         } else {
           currentDirectory.addFile(new File(BigInteger.valueOf(Long.parseLong(parts[0])), parts[1]));
         }
@@ -58,11 +58,9 @@ public class Main {
     BigInteger sum = BigInteger.ZERO;
     int i = 0;
     Directory directory = directories.get(0);
-    BigInteger size = directory.getTotalSize();
-    while(size.compareTo(threshold) <= 0) {
-      sum = sum.add(size);
+    while(directory.getTotalSize().compareTo(threshold) <= 0) {
+      sum = sum.add(directory.getTotalSize());
       directory = directories.get(++i);
-      size = directory.getTotalSize();
     }
     System.out.println(sum);
   }
@@ -80,11 +78,9 @@ public class Main {
 
     int i = 0;
     Directory directory = directories.get(i);
-    BigInteger size = directory.getTotalSize();
-    while(size.compareTo(toFreeSpace) <= 0) {
+    while(directory.getTotalSize().compareTo(toFreeSpace) <= 0)
       directory = directories.get(++i);
-      size = directory.getTotalSize();
-    }
+
     System.out.println(directory.getName() + ": " + directory.getTotalSize());
   }
 
@@ -103,10 +99,9 @@ public class Main {
   }
 
   private static void debug(Directory directory, String indent) {
-    BigInteger totalSize = directory.getTotalSize();
-
-    System.out.println(indent + directory.getName() + "(dir)" + "(" + totalSize.toString() + ")");
+    System.out.println(indent + directory.getName() + "(dir)" + "(" + directory.getTotalSize() + ")");
     indent += "  ";
+
     for (File file : directory.getFiles())
       System.out.println(indent + "- " + file.getName() + " " + file.getSize());
 

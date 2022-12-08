@@ -9,6 +9,7 @@ public class Directory implements Comparable<Directory> {
   private String name;
   private List<Directory> subDirectories = new ArrayList<>();
   private List<File> files = new ArrayList<>();
+  private BigInteger totalSize = BigInteger.ZERO;
 
   public Directory(Directory parent, String name) {
     this.parent = parent;
@@ -17,6 +18,13 @@ public class Directory implements Comparable<Directory> {
 
   public void addFile(File file) {
     files.add(file);
+    totalSize = totalSize.add(file.getSize());
+
+    Directory d = this.getParent();
+    while (d != null) {
+      d.setTotalSize(d.getTotalSize().add(file.getSize()));
+      d = d.getParent();
+    }
   }
 
   public void addSubDirectory(Directory directory) {
@@ -27,25 +35,33 @@ public class Directory implements Comparable<Directory> {
     return subDirectories.stream().filter(sd -> sd.getName().equals(name)).findFirst().orElse(null);
   }
 
-  public BigInteger getFilesSize() {
-    BigInteger filesSize = BigInteger.ZERO;
-    for (File file : files)
-      filesSize = filesSize.add(file.getSize());
-    return filesSize;
-  }
+//  public BigInteger getFilesSize() {
+//    BigInteger filesSize = BigInteger.ZERO;
+//    for (File file : files)
+//      filesSize = filesSize.add(file.getSize());
+//    return filesSize;
+//  }
+//
+//  public BigInteger getTotalSize() {
+//    return getTotalSizeHelper(this);
+//  }
+//
+//  private BigInteger getTotalSizeHelper(Directory directory) {
+//    BigInteger size = directory.getFilesSize();
+//
+//    if (!directory.getSubDirectories().isEmpty()) {
+//      for (Directory subDirectory : directory.getSubDirectories())
+//        size = size.add(getTotalSizeHelper(subDirectory));
+//    }
+//    return size;
+//  }
 
   public BigInteger getTotalSize() {
-    return getTotalSizeHelper(this);
+    return this.totalSize;
   }
 
-  private BigInteger getTotalSizeHelper(Directory directory) {
-    BigInteger size = directory.getFilesSize();
-
-    if (!directory.getSubDirectories().isEmpty()) {
-      for (Directory subDirectory : directory.getSubDirectories())
-        size = size.add(getTotalSizeHelper(subDirectory));
-    }
-    return size;
+  public void setTotalSize(BigInteger totalSize) {
+    this.totalSize = totalSize;
   }
 
   public Directory getParent() {
