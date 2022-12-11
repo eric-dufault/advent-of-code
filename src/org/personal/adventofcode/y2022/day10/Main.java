@@ -2,11 +2,12 @@ package org.personal.adventofcode.y2022.day10;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
   private static final int CYCLE_LENGTH = 40;
+  private static final int CYCLE_OFFSET = 20;
 
   public static void main(String[] args) throws Exception {
     List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day10\\input10.txt"));
@@ -17,29 +18,24 @@ public class Main {
   private static void partA(List<String> lines) {
     int currentCycle = 0;
     int registerValue = 1;
-    int[] interestingCycles = new int[] {20, 60, 100, 140, 180, 220};
-    int[] interestingRegisterValues = new int[interestingCycles.length];
-    int interestingCyclesIndex = 0;
+    List<Cycle> interestingCycles = new ArrayList<>();
 
     for (String line : lines) {
-      CpuInstruction instruction = getCpuInstruction(line);
-      if (instruction != null) {
-        for (int i = 0; i < instruction.getCpuInstructionType().getCycles(); i++) {
+      Instruction cpuInstruction = getInstruction(line);
+      if (cpuInstruction != null) {
+        for (int i = 0; i < cpuInstruction.getInstructionType().getCycles(); i++) {
           currentCycle++;
-          if (Arrays.binarySearch(interestingCycles, currentCycle) >= 0) {
-            interestingRegisterValues[interestingCyclesIndex] = registerValue;
-            interestingCyclesIndex++;
-          }
+
+          if ((currentCycle + CYCLE_OFFSET) % CYCLE_LENGTH == 0)
+            interestingCycles.add(new Cycle(currentCycle, registerValue));
         }
 
-        if (instruction.getCpuInstructionType().isModifyRegister())
-          registerValue += instruction.getRegisterValue();
+        if (cpuInstruction.getInstructionType().isModifyRegister())
+          registerValue += cpuInstruction.getRegisterValue();
       }
     }
 
-    int sum = 0;
-    for (int i = 0; i < interestingCycles.length; i++)
-      sum += (interestingCycles[i]*interestingRegisterValues[i]);
+    int sum = interestingCycles.stream().mapToInt(s -> s.getCycleNumber() * s.getRegisterValue()).reduce(0, Integer::sum);
     System.out.println(sum);
   }
 
@@ -48,8 +44,8 @@ public class Main {
     int registerValue = 1;
 
     for (String line : lines) {
-      CpuInstruction instruction = getCpuInstruction(line);
-      for (int i = 0; i < instruction.getCpuInstructionType().getCycles(); i++) {
+      Instruction crtInstruction = getInstruction(line);
+      for (int i = 0; i < crtInstruction.getInstructionType().getCycles(); i++) {
         if (Math.abs(currentCycle - registerValue) <= 1)
           System.out.print("#");
         else
@@ -63,20 +59,20 @@ public class Main {
         }
       }
 
-      if (instruction.getCpuInstructionType().isModifyRegister())
-        registerValue += instruction.getRegisterValue();
+      if (crtInstruction.getInstructionType().isModifyRegister())
+        registerValue += crtInstruction.getRegisterValue();
     }
   }
 
-  private static CpuInstruction getCpuInstruction(String line) {
-    CpuInstruction cpuInstruction = null;
-    if (line.contains(CpuInstructionType.NOOP.getName())) {
-      cpuInstruction = new CpuInstruction(CpuInstructionType.NOOP, null);
+  private static Instruction getInstruction(String line) {
+    Instruction instruction = null;
+    if (line.contains(InstructionType.NOOP.getName())) {
+      instruction = new Instruction(InstructionType.NOOP, null);
     }
-    else if(line.contains(CpuInstructionType.ADD_X.getName())) {
+    else if(line.contains(InstructionType.ADD_X.getName())) {
       String[] split = line.split(" ");
-      cpuInstruction = new CpuInstruction(CpuInstructionType.ADD_X, Integer.parseInt(split[1]));
+      instruction = new Instruction(InstructionType.ADD_X, Integer.parseInt(split[1]));
     }
-    return cpuInstruction;
+    return instruction;
   }
 }
