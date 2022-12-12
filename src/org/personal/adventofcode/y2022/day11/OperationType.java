@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 
 public enum OperationType {
 	ADDITION("+", BigInteger::add),
-	MULTIPLICATION("*", (a,b) -> (a.multiply(b)));
+	MULTIPLICATION("*", BigInteger::multiply);
 
 	private String symbol;
 	private BiFunction<BigInteger, BigInteger, BigInteger> biFunction;
