@@ -30,7 +30,7 @@ public class Monkey implements Comparable<Monkey> {
 	}
 
 	public void inspect(Item item) {
-		BigInteger secondOperand = operation.isApplyFirstOperand() ? item.getWorryLevel() : operation.getSecondOperand();
+		BigInteger secondOperand = operation.getSecondOperand() != null ? operation.getSecondOperand() : item.getWorryLevel();
 		BigInteger worryLevel = operation.getOperationType().getBiFunction().apply(item.getWorryLevel(), secondOperand);
 		item.setWorryLevel(worryLevel);
 

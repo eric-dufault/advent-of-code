@@ -35,14 +35,14 @@ public class Main {
 
 	private static void partB(List<String> lines) {
 		List<Monkey> monkeys = createMonkeys(lines);
-		BigInteger reliefDivisor = monkeys.stream().map(Monkey::getTestDivisor).reduce(BigInteger.ONE, BigInteger::multiply);
+		BigInteger leastCommonDivisor = monkeys.stream().map(Monkey::getTestDivisor).reduce(BigInteger.ONE, BigInteger::multiply);
 		int rounds = 10000;
 		for (int i = 0; i < rounds; i++) {
 			for (Monkey monkey : monkeys) {
 				Item item = monkey.getNextItem();
 				while (item != null) {
 					monkey.inspect(item);
-					item.applyRelief(reliefDivisor);
+					item.applyRelief(leastCommonDivisor);
 					monkey.toss(item);
 					item = monkey.getNextItem();
 				}
@@ -98,8 +98,7 @@ public class Main {
 		}
 
 		BigInteger secondOperand = getBigInteger(rightHandSideParts[2]);
-		boolean applyFirstOperand = secondOperand == null;
-		monkey.setOperation(new Operation(operationType, secondOperand, applyFirstOperand));
+		monkey.setOperation(new Operation(operationType, secondOperand));
 	}
 
 	private static void createTestDivisor(String testString, Monkey monkey) {

@@ -5,12 +5,10 @@ import java.math.BigInteger;
 public class Operation {
 	private OperationType operationType;
 	private BigInteger secondOperand;
-	private boolean applyFirstOperand;
 
-	public Operation(OperationType operationType, BigInteger secondOperand, boolean applyFirstOperand) {
+	public Operation(OperationType operationType, BigInteger secondOperand) {
 		this.operationType = operationType;
 		this.secondOperand = secondOperand;
-		this.applyFirstOperand = applyFirstOperand;
 	}
 
 	public OperationType getOperationType() {
@@ -20,10 +18,4 @@ public class Operation {
 	public BigInteger getSecondOperand() {
 		return secondOperand;
 	}
-
-	public boolean isApplyFirstOperand() {
-		return applyFirstOperand;
-	}
-
-
 }
