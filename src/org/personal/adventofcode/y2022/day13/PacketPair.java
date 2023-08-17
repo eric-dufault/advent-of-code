@@ -21,16 +21,8 @@ public class PacketPair {
 		this.state = packetComparator.compare(left, right);
 	}
 
-	public String getLeftSource() {
-		return leftSource;
-	}
-
 	public PacketData getLeft() {
 		return left;
-	}
-
-	public String getRightSource() {
-		return rightSource;
 	}
 
 	public PacketData getRight() {
@@ -67,7 +59,6 @@ public class PacketPair {
 				i++;
 			}
 			else {
-				//build string character by character advancing until  [, ], or , is found
 				StringBuilder sb = new StringBuilder(2);
 				do {
 					sb.append(c);
@@ -80,10 +71,6 @@ public class PacketPair {
 			}
 		}
 		return lastStack;
-	}
-
-	public String toString() {
-		return leftSource + " vs " + rightSource;
 	}
 
 }

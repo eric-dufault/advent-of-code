@@ -38,7 +38,6 @@ public class PacketComparator implements Comparator<PacketData> {
 				return 0;
 		}
 		else {
-			//either left or right is an INT and the other is a LIST
 			if (PacketDataType.INTEGER.equals(left.getType())) {
 				PacketDataList pdl = new PacketDataList(null);
 				pdl.add(left);
