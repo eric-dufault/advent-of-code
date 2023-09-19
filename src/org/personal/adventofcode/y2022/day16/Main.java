@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-	private static final String FILENAME = "C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day16b\\input16.txt";
+	private static final String FILENAME = "C:\\Users\\Eric\\Projects\\advent-of-code\\src\\org\\personal\\adventofcode\\y2022\\day16\\input16.txt";
 
 	public static void main(String[] args) throws Exception {
 		List<String> fileLines = Files.readAllLines(Paths.get(FILENAME));
@@ -21,10 +21,11 @@ public class Main {
 	}
 
 	private static Path findBestPath(List<Valve> flowValves, Valve start, int rounds) {
+		Path winner = new Path(start);
+
 		Queue<Path> queue = new ArrayDeque<>();
 		queue.add(new Path(start));
 
-		Path winner = queue.peek();
 		while (!queue.isEmpty()) {
 			Path current = queue.poll();
 
