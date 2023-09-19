@@ -1,4 +1,4 @@
-package org.personal.adventofcode.y2022.day16b;
+package org.personal.adventofcode.y2022.day16;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

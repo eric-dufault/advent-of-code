@@ -1,4 +1,4 @@
-package org.personal.adventofcode.y2022.day16b;
+package org.personal.adventofcode.y2022.day16;
 
 import java.util.HashMap;
 import java.util.HashSet;
