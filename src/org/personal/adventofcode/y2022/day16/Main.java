@@ -35,19 +35,20 @@ public class Main {
 				winner = current;
 
 			for (Valve flowValve : flowValves) {
-				Integer stepsToFlowValve = current.getValve().getStepsToValve(flowValve);
+				Integer stepsToValve = current.getValve().getStepsToValve(flowValve);
 
 				if (!current.getVisited().contains(flowValve)
 						&& !current.getValve().equals(flowValve)
-						&& (current.getSteps() + stepsToFlowValve) <= rounds) {
+						&& (current.getSteps() + stepsToValve) <= rounds) {
 
 					Path path = new Path(flowValve, current.getVisited());
-					path.setSteps(current.getSteps() + stepsToFlowValve);
-					path.setFlow((current.getFlowRate() * stepsToFlowValve) + current.getFlow());
+					path.setSteps(current.getSteps() + stepsToValve);
+					path.setFlow((current.getFlowRate() * stepsToValve) + current.getFlow());
 					path.setFlowRate(current.getFlowRate() + flowValve.getFlowRate());
 
 					path.setTotalFlow((path.getFlowRate() * (rounds - path.getSteps())) + path.getFlow());
 
+					//optimization, only consider paths that might result as winners
 					if (path.getTotalFlow() >= winner.getTotalFlow() || path.getSteps() < winner.getSteps()) {
 						queue.add(path);
 					}
