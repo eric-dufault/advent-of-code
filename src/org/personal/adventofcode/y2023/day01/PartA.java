@@ -11,7 +11,7 @@ public class PartA {
 
 	private static Integer getTwoDigitNumber(String line) {
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < line.length(); i++) {
+		for (int i = 0; i < line.length(); i++) {
 			char c = line.charAt(i);
 			if (Character.isDigit(c)) {
 				sb.append(c);

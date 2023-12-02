@@ -6,8 +6,8 @@ import static java.util.Map.entry;
 
 public class PartB {
 
-	private static final Set<String> WORDS_DIGITS = new HashSet<>(Arrays.asList("one", "two", "three", "four", "five", "six", "seven",
-			"eight", "nine", "1", "2", "3", "4", "5", "6", "7", "8", "9"));
+	private static final List<String> WORDS_DIGITS = Arrays.asList("one", "two", "three", "four", "five", "six", "seven",
+			"eight", "nine", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
 	private static final Map<String, String> WORD_DIGIT_MAP = Map.ofEntries(
 			entry("one", "1"),
@@ -29,20 +29,19 @@ public class PartB {
 	private static Integer getTwoDigitNumber(String line) {
 		//look for usages of words and digits in line
 		Map<String, Integer> minOccurrences = new HashMap<>();
-		for (String word : WORDS_DIGITS) {
+		Map<String, Integer> maxOccurrences = new HashMap<>();
+
+		WORDS_DIGITS.forEach(word -> {
 			int indexOf = line.indexOf(word);
 			if (indexOf >= 0) {
 				minOccurrences.put(word, indexOf);
 			}
-		}
 
-		Map<String, Integer> maxOccurrences = new HashMap<>();
-		for (String word : WORDS_DIGITS) {
-			int indexOf = line.lastIndexOf(word);
-			if (indexOf >= 0) {
-				maxOccurrences.put(word, indexOf);
+			int lastIndexOf = line.lastIndexOf(word);
+			if (lastIndexOf >= 0) {
+				maxOccurrences.put(word, lastIndexOf);
 			}
-		}
+		});
 
 		//get the keys with boundary values
 		Map.Entry<String, Integer> min = null;
@@ -61,13 +60,8 @@ public class PartB {
 			throw new RuntimeException("Bad data");
 
 		//translate to digits
-		String minVal = WORD_DIGIT_MAP.get(min.getKey());
-		if (minVal == null)
-			minVal = min.getKey();
-
-		String maxVal = WORD_DIGIT_MAP.get(max.getKey());
-		if (maxVal == null)
-			maxVal = max.getKey();
+		String minVal = WORD_DIGIT_MAP.getOrDefault(min.getKey(), min.getKey());
+		String maxVal = WORD_DIGIT_MAP.getOrDefault(max.getKey(), max.getKey());
 
 		return Integer.parseInt(minVal + maxVal);
 	}
