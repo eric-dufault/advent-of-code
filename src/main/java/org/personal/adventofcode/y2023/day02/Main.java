@@ -57,13 +57,13 @@ public class Main {
 				String[] cubeParts = cube.trim().split(" ");
 				switch (cubeParts[1]) {
 					case "red":
-						red = Integer.parseInt(cubeParts[0]);
+						red = Integer.parseInt(cubeParts[0].trim());
 						break;
 					case "green":
-						green = Integer.parseInt(cubeParts[0]);
+						green = Integer.parseInt(cubeParts[0].trim());
 						break;
 					case "blue":
-						blue = Integer.parseInt(cubeParts[0]);
+						blue = Integer.parseInt(cubeParts[0].trim());
 						break;
 				}
 			}

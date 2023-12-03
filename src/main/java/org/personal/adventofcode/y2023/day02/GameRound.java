@@ -12,17 +12,7 @@ public class GameRound {
 	}
 
 	public Integer getPower() {
-		Integer power = 1;
-		if (red > 0)
-			power *= red;
-
-		if (green > 0)
-			power *= green;
-
-		if (blue > 0)
-			power *= blue;
-
-		return power;
+		return red * green * blue;
 	}
 
 	public Integer getRed() {
