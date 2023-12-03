@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		List<String> fileLines = Files.readAllLines(Paths.get("src\\main\\resources\\y2023\\day03\\input.txt"));
-		List<PartNumber> partNumbers = parseNumbers(fileLines);
+		List<PartNumber> partNumbers = parsePartNumbers(fileLines);
 
 		partA(partNumbers);
 		partB(partNumbers);
@@ -40,7 +40,7 @@ public class Main {
 		System.out.println(gearRatioSum);
 	}
 
-	private static List<PartNumber> parseNumbers(List<String> fileLines) {
+	private static List<PartNumber> parsePartNumbers(List<String> fileLines) {
 		List<PartNumber> partNumbers = new ArrayList<>();
 
 		for (int j = 0; j < fileLines.size(); j++) {
