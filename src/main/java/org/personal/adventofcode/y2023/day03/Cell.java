@@ -3,7 +3,7 @@ package org.personal.adventofcode.y2023.day03;
 public class Cell {
 	private Character symbol;
 	private Coordinate coordinate;
-	private Cell connectorCell = null;
+	private Cell connectorCell;
 
 	public Cell(Character symbol, Coordinate coordinate) {
 		this.symbol = symbol;
