@@ -29,14 +29,14 @@ public class Main {
 		for (Card card : cards) {
 			int matches = card.getOwnedWinningNumbers().size();
 			for (int i = 1; i <= matches && (card.getNumber() + i) <= maxCardNumber; i++) {
-				int multiplier = cardCounts.get(card.getNumber());
-				for (int j = 0; j < multiplier; j++) {
+				int copies = cardCounts.get(card.getNumber());
+				for (int j = 0; j < copies; j++) {
 					cardCounts.put(card.getNumber() + i, cardCounts.get(card.getNumber() + i) + 1);
 				}
 			}
 		}
 
-		int totalCards = cardCounts.entrySet().stream().map(Map.Entry::getValue).reduce(Integer::sum).orElse(0);
+		int totalCards = cardCounts.values().stream().reduce(Integer::sum).orElse(0);
 		System.out.println(totalCards);
 	}
 

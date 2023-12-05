@@ -15,11 +15,7 @@ public class Card {
 
 	public int getPoints() {
 		int matches = getOwnedWinningNumbers().size();
-		int points = matches == 0 ? 0 : 1;
-		for (int i = 1; i < matches; i++) {
-			points *= 2;
-		}
-		return points;
+		return matches == 0 ? 0 : (int) Math.pow(2.0, matches - 1);
 	}
 
 	public List<Integer> getOwnedWinningNumbers() {
