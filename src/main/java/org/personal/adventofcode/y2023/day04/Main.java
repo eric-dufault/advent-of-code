@@ -29,8 +29,7 @@ public class Main {
 		for (Card card : cards) {
 			int matches = card.getOwnedWinningNumbers().size();
 			for (int i = 1; i <= matches && (card.getNumber() + i) <= maxCardNumber; i++) {
-				int copies = cardCounts.get(card.getNumber());
-				for (int j = 0; j < copies; j++) {
+				for (int j = 0; j < cardCounts.get(card.getNumber()); j++) {
 					cardCounts.put(card.getNumber() + i, cardCounts.get(card.getNumber() + i) + 1);
 				}
 			}
