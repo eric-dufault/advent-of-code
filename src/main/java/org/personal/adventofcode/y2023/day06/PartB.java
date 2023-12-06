@@ -11,7 +11,7 @@ public class PartB {
 		for (long velocity = 0; velocity < race.getTimeAllotted(); velocity++) {
 			long outcomeDistance = velocity * (race.getTimeAllotted() - velocity);
 			if (outcomeDistance > race.getRecordDistance()) {
-				winningOutcomesCount += 1L;
+				winningOutcomesCount++;
 			}
 		}
 		System.out.println(winningOutcomesCount);
