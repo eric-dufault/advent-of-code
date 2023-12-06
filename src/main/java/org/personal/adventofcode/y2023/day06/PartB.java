@@ -7,11 +7,11 @@ public class PartB {
 	public static void execute(List<String> fileLines) {
 		Race race = parseRace(fileLines);
 
-		long margin = 0;
+		long margin = 0L;
 		for (long velocity = 0; velocity < race.getTimeAllotted(); velocity++) {
 			long outcomeDistance = velocity * (race.getTimeAllotted() - velocity);
 			if (outcomeDistance > race.getRecordDistance()) {
-				margin += 1;
+				margin += 1L;
 			}
 		}
 		System.out.println(margin);
