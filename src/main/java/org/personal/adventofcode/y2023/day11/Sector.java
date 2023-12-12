@@ -36,6 +36,10 @@ public class Sector {
 		return getX() == other.getX() && getY() == other.getY();
 	}
 
+	public int hashCode() {
+		return (31 + getX()) + getY();
+	}
+
 	public String toString() {
 		return "(" + getX() + "," + getY() + ")";
 	}
