@@ -44,15 +44,13 @@ public class Main {
 	private static long getOffset(long baseOffset, List<Integer> noGalaxyRowIndexes, List<Integer> noGalaxyColIndexes, Sector firstGalaxy, Sector secondGalaxy) {
 		long offset = 0L;
 		for (Integer j : noGalaxyColIndexes) {
-			if (Math.min(firstGalaxy.getX(), secondGalaxy.getX()) < j && j < Math.max(firstGalaxy.getX(), secondGalaxy.getX())) {
+			if (Math.min(firstGalaxy.getX(), secondGalaxy.getX()) < j && j < Math.max(firstGalaxy.getX(), secondGalaxy.getX()))
 				offset += baseOffset;
-			}
 		}
 
 		for (Integer i : noGalaxyRowIndexes) {
-			if (Math.min(firstGalaxy.getY(), secondGalaxy.getY()) < i && i < Math.max(firstGalaxy.getY(), secondGalaxy.getY())) {
+			if (Math.min(firstGalaxy.getY(), secondGalaxy.getY()) < i && i < Math.max(firstGalaxy.getY(), secondGalaxy.getY()))
 				offset += baseOffset;
-			}
 		}
 		return offset;
 	}
