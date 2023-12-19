@@ -17,36 +17,10 @@ public class Main {
 	);
 
 	public static void main(String[] args) throws Exception {
-		List<String> fileLines = Files.readAllLines(Paths.get("src\\main\\resources\\y2023\\day05\\sampleInput.txt"));
+		List<String> fileLines = Files.readAllLines(Paths.get("src\\main\\resources\\y2023\\day05\\input.txt"));
 		List<RangeCategory> rangeCategories = parseRangeCategory(fileLines);
 
-//		PartA.execute(fileLines, rangeCategories);
-//		PartB.execute(fileLines, rangeCategories);
-
-		/*
-		2 is a prime number
-		3 is a prime number
-		4 equals 2 * 2.0
-		5 is a prime number
-		6 equals 2 * 3.0
-		7 is a prime number
-		8 equals 2 * 4.0
-		9 equals 3 * 3.0
-		 */
-
-		for (int n = 2; n < 10; n++) {
-			boolean flag = false;
-			for (int x = 2; x < n; x++) {
-				if (n % x == 0) {
-					double k = n / x;
-					System.out.println(n + " equals " +x + " * " + k);
-					flag = true;
-					break;
-				}
-			}
-			if (!flag)
-				System.out.println(n + " is a prime number");
-		}
+		PartA.execute(fileLines, rangeCategories);
 	}
 
 	private static List<RangeCategory> parseRangeCategory(List<String> fileLines) {
