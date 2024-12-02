@@ -17,89 +17,62 @@ public class Report {
 	}
 
 	private boolean isSafe(List<Integer> levels) {
+		SafetyResult s = getSafetyResult(levels);
+		return s.isSafe();
+	}
+
+	private SafetyResult getSafetyResult(List<Integer> levels) {
 		int i = 0, j = 1;
-		boolean foundIncreasing = false;
-		boolean foundDecreasing = false;
-		boolean levelsVaryTooMuch = false;
+
+		SafetyResult s = new SafetyResult();
 		while (j < levels.size()) {
-			int a = levels.get(i);
-			int b = levels.get(j);
-
-			levelsVaryTooMuch = Math.abs(a - b) == 0 || Math.abs(a - b) > 3;
-			if (levelsVaryTooMuch)
+			s.levelsVaryBadly = Math.abs(levels.get(i) - levels.get(j)) == 0 || Math.abs(levels.get(i) - levels.get(j)) > 3;
+			if (s.levelsVaryBadly) {
+				s.lastLevelVaryBadlyIndex = j;
 				break;
+			}
 
-			if (a < b)
-				foundIncreasing = true;
+			if (levels.get(i) < levels.get(j)) {
+				s.foundIncreasing = true;
+				s.lastIncreasingIndex = j;
+			}
 
-			if (a > b)
-				foundDecreasing = true;
+			if (levels.get(i) > levels.get(j)) {
+				s.foundDecreasing = true;
+				s.lastDecreasingIndex = j;
+			}
 
 			i++;
 			j++;
 		}
 
-		return !levelsVaryTooMuch && ((foundIncreasing && !foundDecreasing) || (!foundIncreasing && foundDecreasing));
+		return s;
 	}
 
 	public boolean isSafeWithDampener() {
-		if (isSafe())
+		SafetyResult s = getSafetyResult(this.levels);
+		if (s.isSafe())
 			return true;
 		else {
-			int i = 0, j = 1;
-			boolean foundIncreasing = false;
-			int foundIncreasingI = 0, foundIncreasingJ = 0;
-			boolean foundDecreasing = false;
-			int foundDecreasingI = 0, foundDecreasingJ = 0;
-			boolean levelsVaryTooMuch = false;
-			int levelsVaryTooMuchI = 0, levelsVaryTooMuchJ = 0;
-
-			while (j < levels.size()) {
-				int a = levels.get(i);
-				int b = levels.get(j);
-
-				levelsVaryTooMuch = Math.abs(a - b) == 0 || Math.abs(a - b) > 3;
-				if (levelsVaryTooMuch) {
-					levelsVaryTooMuchI = i;
-					levelsVaryTooMuchJ = j;
-					break;
-				}
-
-				if (a < b) {
-					foundIncreasing = true;
-					foundIncreasingI = i;
-					foundIncreasingJ = j;
-				}
-
-				if (a > b) {
-					foundDecreasing = true;
-					foundDecreasingI = i;
-					foundDecreasingJ = j;
-				}
-
-				i++;
-				j++;
-			}
-
-			if (levelsVaryTooMuch) {
-				if (isSafe(getRemainingLevels(levelsVaryTooMuchI)))
+			if (s.levelsVaryBadly) {
+				if (isSafe(getLevelsWithRemoved(s.lastLevelVaryBadlyIndex)))
 					return true;
 
-				if (isSafe(getRemainingLevels(levelsVaryTooMuchJ)))
+				if (isSafe(getLevelsWithRemoved(s.lastLevelVaryBadlyIndex - 1)))
 					return true;
 			}
 
-			if (foundIncreasing && foundDecreasing) {
-				if (isSafe(getRemainingLevels(foundDecreasingI)))
+			if (s.foundIncreasing && s.foundDecreasing) {
+				if (isSafe(getLevelsWithRemoved(s.lastDecreasingIndex)))
 					return true;
 
-				if (isSafe(getRemainingLevels(foundDecreasingJ)))
+				if (isSafe(getLevelsWithRemoved(s.lastDecreasingIndex - 1)))
 					return true;
 
-				if (isSafe(getRemainingLevels(foundIncreasingI)))
+				if (isSafe(getLevelsWithRemoved(s.lastIncreasingIndex)))
 					return true;
 
-				if (isSafe(getRemainingLevels(foundIncreasingJ)))
+				if (isSafe(getLevelsWithRemoved(s.lastIncreasingIndex - 1)))
 					return true;
 			}
 
@@ -107,12 +80,25 @@ public class Report {
 		}
 	}
 
-	private List<Integer> getRemainingLevels(int omitIndex) {
+	private List<Integer> getLevelsWithRemoved(int omitIndex) {
 		List<Integer> levels = new ArrayList<>(DEFAULT_LEVELS_SIZE);
 		for (int i = 0; i < this.levels.size(); i++) {
 			if (i != omitIndex)
 				levels.add(this.levels.get(i));
 		}
 		return levels;
+	}
+
+	private static class SafetyResult {
+		private boolean levelsVaryBadly;
+		private int lastLevelVaryBadlyIndex;
+		private boolean foundIncreasing;
+		private int lastIncreasingIndex;
+		private boolean foundDecreasing;
+		private int lastDecreasingIndex;
+
+		private boolean isSafe() {
+			return !(levelsVaryBadly) && ((foundIncreasing && !foundDecreasing) || (!foundIncreasing && foundDecreasing));
+		}
 	}
 }
