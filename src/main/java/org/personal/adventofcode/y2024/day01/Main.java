@@ -34,34 +34,31 @@ public class Main {
 
 		//PART B
 		int[] rightsArray =  rights.stream().mapToInt(Integer::intValue).toArray();
-		List<Location> locations = new ArrayList<>();
+		long similarityScore = 0;
 		for (Integer left : lefts) {
-			Location location = new Location(left);
+			long occurrences = 0;
 
 			int found = Arrays.binarySearch(rightsArray, left);
 			if (found > 0) {
-				location.incrementOccurrences();
+				occurrences++;
 
 				int l = found - 1;
 				while (0 < l && l < rightsArray.length && rightsArray[l] == left) {
-					location.incrementOccurrences();
+					occurrences++;
 					l--;
 				}
 
 				int r = found + 1;
 				while (0 < r && r < rightsArray.length && rightsArray[r] == left) {
-					location.incrementOccurrences();
+					occurrences++;
 					r++;
 				}
 			}
 
-			locations.add(location);
+			similarityScore += (left * occurrences);
 		}
 
-		long similaritiesScore = locations.stream()
-				.mapToLong(Location::getSimilarityScore)
-				.sum();
-		System.out.println(similaritiesScore);
+		System.out.println(similarityScore);
 	}
 
 }
