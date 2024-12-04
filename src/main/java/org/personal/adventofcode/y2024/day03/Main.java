@@ -16,8 +16,8 @@ public class Main {
 	}
 
 	private static void partA(String instructions) {
-		Pattern pattern = Pattern.compile("mul\\([0-9]+,[0-9]+\\)");
 		long sum = 0;
+		Pattern pattern = Pattern.compile("mul\\([0-9]+,[0-9]+\\)");
 		Matcher matcher = pattern.matcher(instructions);
 		while (matcher.find()) {
 			String mul = instructions.substring(matcher.start(), matcher.end());
@@ -33,18 +33,15 @@ public class Main {
 	}
 
 	private static void partB(String instructions) {
-		Pattern mulPattern = Pattern.compile("mul\\([0-9]+,[0-9]+\\)");
-		Pattern doPattern = Pattern.compile("do\\(\\)");
-		Pattern dontPattern = Pattern.compile("don't\\(\\)");
-
-		long sum = 0;
 		List<RangeEntry> ranges = new ArrayList<>();
 		ranges.add(new RangeEntry(0, true));
+		Pattern doPattern = Pattern.compile("do\\(\\)");
 		Matcher doMatcher = doPattern.matcher(instructions);
 		while (doMatcher.find()) {
 			ranges.add(new RangeEntry(doMatcher.start(), true));
 		}
 
+		Pattern dontPattern = Pattern.compile("don't\\(\\)");
 		Matcher dontMatcher = dontPattern.matcher(instructions);
 		while (dontMatcher.find()) {
 			ranges.add(new RangeEntry(dontMatcher.start(), false));
@@ -52,6 +49,8 @@ public class Main {
 
 		Collections.sort(ranges);
 
+		long sum = 0;
+		Pattern mulPattern = Pattern.compile("mul\\([0-9]+,[0-9]+\\)");
 		Matcher mulMatcher = mulPattern.matcher(instructions);
 		while (mulMatcher.find()) {
 			RangeEntry rangeEntry = getRangeEntryForMul(ranges, mulMatcher.start());
