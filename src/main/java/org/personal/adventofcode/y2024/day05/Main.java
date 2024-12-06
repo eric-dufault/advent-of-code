@@ -1,5 +1,8 @@
 package org.personal.adventofcode.y2024.day05;
 
+import org.personal.helpers.graph.Graph;
+import org.personal.helpers.graph.TopologicalSort;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -11,10 +14,31 @@ public class Main {
 		Map<Integer, List<Integer>> orderingRules = parseOrderingRules(fileLines);
 		List<Update> updates = parseUpdates(fileLines);
 
-		int sum = updates.stream().filter(u -> u.isCorrectOrder(orderingRules)).mapToInt(Update::getMiddle).sum();
+		partA(updates, orderingRules);
+		partB(updates, orderingRules);
+	}
+
+	private static void partA(List<Update> updates, Map<Integer, List<Integer>> orderingRules) {
+		int sum = updates.stream().filter(u -> u.isCorrectOrder(orderingRules)).mapToInt(u -> getMiddle(u.updates)).sum();
 		System.out.println(sum);
 	}
 
+	private static void partB(List<Update> updates, Map<Integer, List<Integer>> orderingRules) {
+		int sum = 0;
+		for (Update update : updates) {
+			if (!update.isCorrectOrder(orderingRules)) {
+				Graph<Integer> graph = update.buildDiGraph(orderingRules);
+				List<Integer> sorted = TopologicalSort.dfsSort(graph);
+				sum += getMiddle(sorted);
+			}
+		}
+		System.out.println(sum);
+	}
+
+	private static Integer getMiddle(List<Integer> list) {
+		int half = list.size() / 2;
+		return list.get(half);
+	}
 
 	private static Map<Integer, List<Integer>> parseOrderingRules(List<String> fileLines) {
 		Map<Integer, List<Integer>> orderingRules = new HashMap<>();
@@ -53,7 +77,6 @@ public class Main {
 			}
 			updates.add(update);
 		}
-
 		return updates;
 	}
 

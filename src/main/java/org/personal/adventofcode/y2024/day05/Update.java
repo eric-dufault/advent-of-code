@@ -1,5 +1,9 @@
 package org.personal.adventofcode.y2024.day05;
 
+import org.personal.helpers.graph.DiGraphImpl;
+import org.personal.helpers.graph.Graph;
+import org.personal.helpers.graph.Vertex;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +38,24 @@ public class Update {
 		return correctOrder;
 	}
 
-	public int getMiddle() {
-		int half = updates.size() / 2;
-		return updates.get(half);
+	public Graph<Integer> buildDiGraph(Map<Integer, List<Integer>> orderingRules) {
+		Graph<Integer> g = new DiGraphImpl<>();
+
+		for (Integer i : this.updates) {
+			g.insertVertex(i);
+		}
+
+		for (Vertex<Integer> v : g.vertices()) {
+			if (orderingRules.containsKey(v.getData())) {
+				List<Integer> values = orderingRules.get(v.getData());
+				for (Vertex<Integer> w : g.vertices()) {
+					if (!w.equals(v) && values.contains(w.getData())) {
+						g.insertEdge(v, w);
+					}
+				}
+			}
+		}
+		return g;
 	}
 
 	public String toString() {
