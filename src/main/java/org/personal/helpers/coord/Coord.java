@@ -33,7 +33,7 @@ public class Coord {
 	}
 
 	public int hashCode() {
-		return 31 * (this.x + this.y);
+		return (31 * this.x) + this.y;
 	}
 
 }
