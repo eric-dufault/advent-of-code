@@ -34,26 +34,6 @@ public class Update {
 		return correctOrder;
 	}
 
-	public List<Integer> getCorrectlyOrderedUpdates(Map<Integer, List<Integer>> orderingRules) {
-		if (isCorrectOrder(orderingRules))
-			return updates;
-		else {
-			List<Integer> newUpdates = new ArrayList<>();
-
-			for (int i = 0; i < updates.size(); i++) {
-				List<Integer> orderingRule = orderingRules.get(updates.get(i));
-				if (orderingRule != null) {
-
-				} else {
-					//no ordering rule means can be in right spot
-					newUpdates.add(updates.get(i));
-				}
-			}
-
-			return newUpdates;
-		}
-	}
-
 	public int getMiddle() {
 		int half = updates.size() / 2;
 		return updates.get(half);
