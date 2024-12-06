@@ -1,23 +1,23 @@
 package org.personal.helpers.graph;
 
-public class EdgeImpl<V> implements Edge<V> {
-	private final Vertex<V> fromVertex;
-	private final Vertex<V> toVertex;
+public class EdgeImpl<T> implements Edge<T> {
+	private final Vertex<T> fromVertex;
+	private final Vertex<T> toVertex;
 	private final boolean uniDirectional;
 
-	public EdgeImpl(Vertex<V> fromVertex, Vertex<V> toVertex, boolean uniDirectional) {
+	public EdgeImpl(Vertex<T> fromVertex, Vertex<T> toVertex, boolean uniDirectional) {
 		this.fromVertex = fromVertex;
 		this.toVertex = toVertex;
 		this.uniDirectional = uniDirectional;
 	}
 
 	@Override
-	public Vertex<V> fromVertex() {
+	public Vertex<T> fromVertex() {
 		return this.fromVertex;
 	}
 
 	@Override
-	public Vertex<V> toVertex() {
+	public Vertex<T> toVertex() {
 		return this.toVertex;
 	}
 
