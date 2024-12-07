@@ -51,9 +51,9 @@ public class DiGraphImpl<T> implements Graph<T> {
 	@Override
 	public boolean areAdjacent(Vertex<T> v, Vertex<T> w) {
 		boolean adjacent = false;
-		DiVertexImpl<T> adv = (DiVertexImpl<T>) v;
-		for (Edge<T> e : incidentEdges(adv)) {
-			if (w.equals(traverse(adv, e))) {
+		DiVertexImpl<T> div = (DiVertexImpl<T>) v;
+		for (Edge<T> e : incidentEdges(div)) {
+			if (w.equals(traverse(div, e))) {
 				adjacent = true;
 				break;
 			}
@@ -71,7 +71,7 @@ public class DiGraphImpl<T> implements Graph<T> {
 	@Override
 	public Edge<T> insertEdge(Vertex<T> fromVertex, Vertex<T> toVertex) {
 		Edge<T> e = new EdgeImpl<>(fromVertex, toVertex, true);
-		((DiVertexImpl<T>) fromVertex).addAdjacentEdge(e);
+		((DiVertexImpl<T>) fromVertex).addIncidentEdge(e);
 		((DiVertexImpl<T>) toVertex).incrementInDegree();
 		return e;
 	}
@@ -83,9 +83,9 @@ public class DiGraphImpl<T> implements Graph<T> {
 		for (Vertex<T> v : this.vertices) {
 			List<Edge<T>> incidentEdgesList = new ArrayList<>(incidentEdges(v));
 			for (Edge<T> incidentEdge : incidentEdgesList) {
-				DiVertexImpl<T> adv = (DiVertexImpl<T>) traverse(v, incidentEdge);
-				if (vertex.equals(adv)) {
-					adv.removeAdjacentEdge(incidentEdge);
+				DiVertexImpl<T> oppositeVertex = (DiVertexImpl<T>) traverse(v, incidentEdge);
+				if (oppositeVertex.equals(vertex)) {
+					oppositeVertex.removeIncidentEdge(incidentEdge);
 				}
 			}
 		}
@@ -95,7 +95,7 @@ public class DiGraphImpl<T> implements Graph<T> {
 
 	@Override
 	public void removeEdge(Edge<T> e) {
-		((DiVertexImpl<T>)e.fromVertex()).removeAdjacentEdge(e);
+		((DiVertexImpl<T>)e.fromVertex()).removeIncidentEdge(e);
 		((DiVertexImpl<T>)e.toVertex()).decrementInDegree();
 	}
 }

@@ -22,11 +22,11 @@ public class DiVertexImpl<T> implements Vertex<T> {
 		return this.incidentEdges;
 	}
 
-	public void addAdjacentEdge(Edge<T> e) {
+	public void addIncidentEdge(Edge<T> e) {
 		this.incidentEdges.add(e);
 	}
 
-	public void removeAdjacentEdge(Edge<T> e) {
+	public void removeIncidentEdge(Edge<T> e) {
 		this.incidentEdges.remove(e);
 	}
 
