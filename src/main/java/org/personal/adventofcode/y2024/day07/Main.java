@@ -47,10 +47,12 @@ public class Main {
 			return;
 
 		Node leftNode = new Node(rhs[i], ADDITION.apply(current.cumulativeData, rhs[i]));
+		leftNode.parent = current;
 		current.leftNode = leftNode;
 		buildTree(leftNode, i + 1, rhs);
 
 		Node rightNode = new Node(rhs[i], MULTIPLICATION.apply(current.cumulativeData, rhs[i]));
+		rightNode.parent = current;
 		current.rightNode = rightNode;
 		buildTree(rightNode, i + 1, rhs);
 	}
@@ -70,6 +72,7 @@ public class Main {
 	private static class Node {
 		long data;
 		long cumulativeData;
+		Node parent;
 		Node leftNode;
 		Node rightNode;
 

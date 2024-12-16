@@ -75,14 +75,17 @@ public class PartB {
 			return;
 
 		Node leftNode = new Node(rhs[i]);
+		leftNode.parent = current;
 		current.leftNode = leftNode;
 		buildTree(leftNode, i + 1, rhs);
 
 		Node middleNode = new Node(rhs[i]);
+		middleNode.parent = current;
 		current.middleNode = middleNode;
 		buildTree(middleNode, i + 1, rhs);
 
 		Node rightNode = new Node(rhs[i]);
+		rightNode.parent = current;
 		current.rightNode = rightNode;
 		buildTree(rightNode, i + 1, rhs);
 	}
@@ -91,6 +94,7 @@ public class PartB {
 	private static class Node {
 		long data;
 		long cumulativeData;
+		Node parent;
 		Node leftNode;
 		Node middleNode;
 		Node rightNode;
