@@ -37,7 +37,7 @@ public class Main {
 		buildTree(root, 1, rhs);
 
 		Set<Node> leafs = new HashSet<>();
-		addLeafNodes(root, leafs);
+		addLeafNodes(lhs, root, leafs);
 
 		return leafs.stream().anyMatch(node -> node.cumulativeData == lhs);
 	}
@@ -55,15 +55,15 @@ public class Main {
 		buildTree(rightNode, i + 1, rhs);
 	}
 
-	private static void addLeafNodes(Node node, Set<Node> leafs) {
+	private static void addLeafNodes(long lhs, Node node, Set<Node> leafs) {
 		if (node.leftNode == null && node.rightNode == null)
 			leafs.add(node);
 
-		if (node.leftNode != null)
-			addLeafNodes(node.leftNode, leafs);
+		if (node.leftNode != null && node.cumulativeData <= lhs)
+			addLeafNodes(lhs, node.leftNode, leafs);
 
-		if (node.rightNode != null)
-			addLeafNodes(node.rightNode, leafs);
+		if (node.rightNode != null && node.cumulativeData <= lhs)
+			addLeafNodes(lhs, node.rightNode, leafs);
 	}
 
 
