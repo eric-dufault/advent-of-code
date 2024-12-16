@@ -108,34 +108,4 @@ public class PartB {
 			return this.data + ":" + this.cumulativeData;
 		}
 	}
-
-
-
-
-	private static void addPathsOld(long lhs, Node node, String path, List<String> paths) {
-		if (node.leftNode == null && node.middleNode == null && node.rightNode == null) {
-			paths.add(path);
-		}
-
-		if (node.leftNode != null) {
-			node.leftNode.cumulativeData = node.cumulativeData + node.leftNode.data;
-			if (node.leftNode.cumulativeData <= lhs) {
-				addPathsOld(lhs, node.leftNode, path + "+" + node.leftNode, paths);
-			}
-		}
-
-		if (node.middleNode != null) {
-			node.middleNode.cumulativeData = Long.parseLong(node.cumulativeData + "" + node.middleNode.data);
-			if (node.middleNode.cumulativeData <= lhs) {
-				addPathsOld(lhs, node.middleNode, path + "||" + node.middleNode, paths);
-			}
-		}
-
-		if (node.rightNode != null) {
-			node.rightNode.cumulativeData = node.cumulativeData * node.rightNode.data;
-			if (node.rightNode.cumulativeData <= lhs) {
-				addPathsOld(lhs, node.rightNode, path + "*" + node.rightNode, paths);
-			}
-		}
-	}
 }
